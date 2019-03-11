@@ -10,6 +10,7 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Image} from 'react-native';
 import NumPad from './components/NumPad';
+import SoundHelper from './components/SoundHelper';
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -26,15 +27,26 @@ export default class App extends Component<Props> {
       this.playSuccessBeep = this.playSuccessBeep.bind(this);
       this.playErrorBeep = this.playErrorBeep.bind(this);
       this.onEmployeeIdChanged = this.onEmployeeIdChanged.bind(this);
+
+      SoundHelper.initiate();
+      this.errorSound =  SoundHelper.getSoundObject({path:require('./resources/Beep-Error.wav')});
+      this.successSound =  SoundHelper.getSoundObject({path:require('./resources/Beep-Success.wav')});
+      this.keyPressSound =  SoundHelper.getSoundObject({path:require('./resources/Beep-KeyPress.wav')});
   }
   playBeep() {
-    //this.keyPressAudio.play();
+    this.keyPressSound.play((success) => {
+      if (!success) {console.log('Sound did not play')}
+    });
   }
   playSuccessBeep() {
-    //this.successAudio.play();
+    this.successSound.play((success) => {
+      if (!success) {console.log('Sound did not play')}
+    });
   }
   playErrorBeep() {
-    //this.errorAudio.play();
+    this.errorSound.play((success) => {
+      if (!success) {console.log('Sound did not play')}
+    });
   }
   onEmployeeIdChanged (employeeId, isFullId) {
       this.setState({ employeeId: employeeId, faceTracked: false });
