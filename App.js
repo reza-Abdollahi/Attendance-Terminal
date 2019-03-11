@@ -8,9 +8,12 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Image} from 'react-native';
+import {Platform, StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import NumPad from './components/NumPad';
 import SoundHelper from './components/SoundHelper';
+import Camera from './components/Camera';
+import Commands from './components/Commands';
+
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -27,6 +30,9 @@ export default class App extends Component<Props> {
       this.playSuccessBeep = this.playSuccessBeep.bind(this);
       this.playErrorBeep = this.playErrorBeep.bind(this);
       this.onEmployeeIdChanged = this.onEmployeeIdChanged.bind(this);
+      this.registerCommand = this.registerCommand.bind(this);
+      this.camera = React.createRef();
+
 
       SoundHelper.initiate();
       this.errorSound =  SoundHelper.getSoundObject({path:require('./resources/Beep-Error.wav')});
@@ -56,6 +62,10 @@ export default class App extends Component<Props> {
 
       //this.getEmployee(employeeId);
   }
+  registerCommand (type) {
+      this.playBeep();
+      this.camera.current.takePicture();
+  }
   render() {
     const { message, employeeId, currentEmployeeInfo, faceTracked } = this.state;
 
@@ -69,9 +79,10 @@ export default class App extends Component<Props> {
               <View style={styles.appMainCenter}>
                 <View style={styles.rightCol}>
                   <NumPad onEmployeeIdChanged={this.onEmployeeIdChanged} value={employeeId} playBeep={this.playBeep}/>
+                  <Commands onClick={this.registerCommand} {...this.state}/>
                 </View>
                 <View style={styles.leftCol}>
-                  <Text>ستون چپ</Text>
+                  <Camera ref={this.camera}/>
                 </View>
               </View>
             </View>
@@ -90,8 +101,6 @@ const styles = StyleSheet.create({
     },
     appMain: {
       flex: 1,
-      //justifyContent: 'center',
-      //alignItems: 'center',
     },
     appMainCenter:{
       flex: 1,
@@ -114,29 +123,12 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: 'darkslategray',
     },
-    appVideo: {
-        borderWidth: 7,
-        borderColor: 'darkslategrey',
-        width: 300,
-        height: 225,
-    },
-    appCanvas: {
-        borderWidth: 14,
-        borderColor: 'darkorange',
-        width: 300,
-        height: 225,
-    },
     leftCol:{
-      backgroundColor:'red'
+      width:'60%',
+      height:'60%',
     },
     rightCol:{
+      width:'30%',
+      minWidth:300,
     },
-
-    appCommands: {
-        flexDirection: 'row-reverse',
-    },
-      appCommandsButton: {
-          flex: 1,
-      },
-
 });
