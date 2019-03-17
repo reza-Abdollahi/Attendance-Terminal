@@ -23,9 +23,6 @@ export default class Camera extends Component {
           captureAudio={false}
           permissionDialogTitle={'دسترسی به دوربین'}
           permissionDialogMessage={'لطفا دسترسی به دوربین را تایید کنید.'}
-          onGoogleVisionBarcodesDetected={({ barcodes }) => {
-            console.log(barcodes);
-          }}
         />
         <Text style={{ fontSize: 1 }}> &nbsp; </Text>
       </View>
@@ -36,8 +33,8 @@ export default class Camera extends Component {
     if (this.camera) {
       const options = { quality: 0.5, base64: true };
       const data = await this.camera.takePictureAsync(options);
-      console.log(data.uri);
-      alert("saved image address: "+ data.uri);
+      // console.warn('takePicture ', data);
+      return data.base64;
     }
   };
 }

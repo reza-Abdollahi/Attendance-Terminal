@@ -51,10 +51,10 @@ export default class App extends Component<Props> {
   async getEmployee(employeeId){
       this.setState({ message: { type: "info", text: "دریافت اطلاعات پرسنلی ..." } });
 
-      let employeeDataUrl = `https://attendance.sepanta.com/Source/EmployeeFullName/${employeeId}`;
+      let employeeDataUrl = `/Source/EmployeeFullName/${employeeId}`;
       const employeeData = await AjaxHelper.instance.get(employeeDataUrl)
-        .then(res => { return res.data; })
-        .catch(function (error) { console.log(error); });
+        .then(res => res.data)
+        .catch(error => console.log(error));
 
       if (employeeData && employeeData.fullName && employeeData.fullName !== ' ') {
           employeeData.Id = employeeId;
@@ -104,9 +104,27 @@ export default class App extends Component<Props> {
           this.setState({ employeeId: undefined });
   }
 
-  registerCommand (type) {
+  async registerCommand (type) {
       this.playBeep();
-      this.camera.current.takePicture();
+      var currentEmployeeInfo = this.state.currentEmployeeInfo;
+      this.setState({ preventCommand: true });
+
+      const base64img = await this.camera.current.takePicture();
+      AjaxHelper.instance.post('/source/register', {
+          employeeId: currentEmployeeInfo.Id,
+          triggerType: type,
+          imgBase64: base64img,
+      })
+      .then(res => {
+          this.playSuccessBeep();
+          var typeText = type === "in" ? "ورود" : "خروج";
+          this.setState({ message: { type: "success", text: typeText + " با موفقیت ثبت شد" } });
+          setTimeout(() => this.onClear(true), 4000);
+      })
+      .catch(error => {
+          this.playErrorBeep();
+          this.setState({ message: { type: "error", text: "خطا در ثبت حضور" } });
+      })
   }
   render() {
     const { message, employeeId, currentEmployeeInfo, faceTracked } = this.state;

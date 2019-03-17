@@ -8,23 +8,26 @@ export default class Commands extends Component<Props> {
     HandleClick(e) {
         this.props.onClick(e);
     }
-    render() {
+    isCommandEnabled(type){
         const { currentEmployeeInfo, preventCommand } = this.props;
-        let disabilityStyle = function(type) {
-          return null;
-
-            let enableCondition = currentEmployeeInfo && !preventCommand;
-            if (type === "out" && enableCondition) enableCondition = currentEmployeeInfo.lastInTime;
-            return enableCondition ? {} : styles.disabled;
+        let isEnabled = currentEmployeeInfo && !preventCommand;
+        if (type === "out")
+          isEnabled = isEnabled && currentEmployeeInfo.lastInTime;
+        return isEnabled;
+    }
+    render() {
+        const disabilityStyle = type => {
+            const isEnabled = this.isCommandEnabled(type);
+            return isEnabled ? null : styles.disabled;
         }
         return (
             <View style={styles.commandContainer}>
                 <TouchableOpacity onPress={()=>this.HandleClick("in")}
-                style={[styles.button, styles.green, disabilityStyle("out")]}>
+                style={[styles.button, styles.green, disabilityStyle("in")]} disabled={!this.isCommandEnabled("in")}>
                     <Text style={styles.buttonText}>ورود</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={()=>this.HandleClick("out")}
-                style={[styles.button, styles.pink, disabilityStyle("out")]}>
+                style={[styles.button, styles.pink, disabilityStyle("out")]} disabled={!this.isCommandEnabled("out")}>
                      <Text style={styles.buttonText}>خروج</Text>
                 </TouchableOpacity>
             </View>

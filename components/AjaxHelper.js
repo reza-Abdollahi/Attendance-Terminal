@@ -14,6 +14,7 @@ export default class AjaxHelper {
           .catch(function (error) { console.warn(error); });;
 
       AjaxHelper.instance = axios.create({
+        baseURL: 'https://attendance.sepanta.com/',
         headers: { Cookie: authCookieValue },
       });
       AjaxHelper.instance.authCookieValue = authCookieValue;

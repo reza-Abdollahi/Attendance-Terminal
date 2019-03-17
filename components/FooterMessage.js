@@ -17,25 +17,28 @@ export default class FooterMessage extends Component<Props> {
         } else if (type === "error") {
             icon = <Text style={styles.red}>❗</Text>
         } else {
-            icon = <Text style={styles.blue}>ℹ</Text>
+            icon = <Text>⌘</Text>
         }
 
         return (
           <View>
-            <Text style={styles.orange}>
-              <Text> 🤵 کاربر محترم، </Text>
-              <Text style={styles.bold}> {employeeName}</Text>
-            </Text>
-            { inTime
-              ? <Text style={styles.green}>
-                 <Text> 🕒 آخرین ورود: </Text>
-                 <Text style={styles.bold}> {inTime}</Text>
-                </Text>
-              : null
-            }
+            <View style={styles.rtl}>
+              <Text>
+                <Text style={styles.white}> 🤵 </Text>
+                <Text> کاربر محترم، </Text>
+                <Text style={[styles.bold, styles.white]}> {employeeName}</Text>
+              </Text>
+              { inTime
+                ? <Text>
+                   <Text> ( 🕒 آخرین ورود: </Text>
+                   <Text style={styles.bold}> {inTime} )</Text>
+                  </Text>
+                : null
+              }
+            </View>
             <View style={styles.rtl}>
               <Text style={styles.icon}>{icon}</Text>
-              <Text style={styles.iconText}> {text}</Text>
+              <Text style={[styles.iconText, styles.orange]}>  {text}</Text>
             </View>
           </View>
         );
@@ -51,7 +54,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   icon:{
-    fontSize: 30,
+    fontSize: 28,
     lineHeight: 30
   },
   iconText:{
@@ -59,6 +62,9 @@ const styles = StyleSheet.create({
   },
   green:{
     color:'green'
+  },
+  white:{
+    color:'white'
   },
   red:{
     color:'red'
