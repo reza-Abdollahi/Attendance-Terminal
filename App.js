@@ -1,24 +1,19 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- * @lint-ignore-every XPLATJSCOPYRIGHT1
- */
-
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import NumPad from './components/NumPad';
 import SoundHelper from './components/SoundHelper';
 import Camera from './components/Camera';
 import Commands from './components/Commands';
 import FooterMessage from './components/FooterMessage';
+import AppHeader from './components/AppHeader';
 import AjaxHelper from './components/AjaxHelper';
-
 
 type Props = {};
 export default class App extends Component<Props> {
+  static navigationOptions = {
+      headerTitle: <AppHeader />,
+  };
+
   constructor(props) {
       super(props);
       this.state = {
@@ -39,13 +34,8 @@ export default class App extends Component<Props> {
   componentDidMount(){
     SoundHelper.initiate();
     this.errorSound =  SoundHelper.getSoundObject({path:require('./resources/Beep-Error.wav')});
-    this.successSound =  SoundHelper.getSoundObject({path:require('./resources/Beep-Success.wav')});
+    this.successSound =  SoundHelper.getSoundObject({path:require('./resources/Beep-Success.wav'), play:true});
     this.keyPressSound =  SoundHelper.getSoundObject({path:require('./resources/Beep-KeyPress.wav')});
-
-    let username = 'Tablet.Test.Attendance',
-        password = 'Test@321';
-    AjaxHelper.initialize(username, password)
-      .then(this.playSuccessBeep);
   }
 
   async getEmployee(employeeId){
@@ -126,15 +116,12 @@ export default class App extends Component<Props> {
           this.setState({ message: { type: "error", text: "خطا در ثبت حضور" } });
       })
   }
+
   render() {
     const { message, employeeId, currentEmployeeInfo, faceTracked } = this.state;
 
     return (
         <View style={styles.mainContainer}>
-            <View style={styles.appHeader}>
-              <Image source={require('./resources/sepanta-logo.png')} style={{marginLeft:10}}/>
-              <Text>پایانه ثبت حضور سپنتا</Text>
-            </View>
             <View style={styles.appMain}>
               <View style={styles.appMainCenter}>
                 <View style={styles.rightCol}>
@@ -171,16 +158,11 @@ const styles = StyleSheet.create({
 
       backgroundColor: '#888',
     },
-    appHeader: {
-        justifyContent: 'flex-start',
-        flexDirection: 'row-reverse',
-        padding: 10,
-        backgroundColor: 'darkslategray',
-    },
     appFooter: {
         justifyContent: 'flex-start',
         flexDirection: 'row-reverse',
-        padding: 10,
+        paddingTop: 5,
+        paddingRight: 10,
         backgroundColor: 'darkslategray',
     },
     leftCol:{

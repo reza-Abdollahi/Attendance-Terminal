@@ -11,7 +11,9 @@ export default class SoundHelper {
     let filePath = soundFileDetails.path,
         url = soundFileDetails.url || false,
         isBundled = soundFileDetails.isBundled,
-        immediatePlay = soundFileDetails.play;
+        immediatePlay = soundFileDetails.play,
+        releaseResources = soundFileDetails.release
+          || (soundFileDetails.release === undefined && soundFileDetails.play);
 
     callback = callback || ((error, sound) => {
       if (error) {
@@ -21,8 +23,9 @@ export default class SoundHelper {
           if (!success) {
             console.log('Sound did not play')
           }
-          // Release when it's done so we're not using up resources
-          sound.release();
+          if (releaseResources) {
+            sound.release();
+          }
         });
       }
     });
