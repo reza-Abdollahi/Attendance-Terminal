@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View, BackHandler} from 'react-native';
 import NumPad from './components/NumPad';
 import SoundHelper from './components/SoundHelper';
 import Camera from './components/Camera';
@@ -29,6 +29,10 @@ export default class App extends Component<Props> {
       this.onEmployeeIdChanged = this.onEmployeeIdChanged.bind(this);
       this.registerCommand = this.registerCommand.bind(this);
       this.camera = React.createRef();
+
+      this._didFocusSubscription = props.navigation.addListener('didFocus', payload =>
+        this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
+      );
   }
 
   componentDidMount(){
@@ -36,6 +40,14 @@ export default class App extends Component<Props> {
     this.errorSound =  SoundHelper.getSoundObject({path:require('./resources/Beep-Error.wav')});
     this.successSound =  SoundHelper.getSoundObject({path:require('./resources/Beep-Success.wav'), play:true});
     this.keyPressSound =  SoundHelper.getSoundObject({path:require('./resources/Beep-KeyPress.wav')});
+
+    this._willBlurSubscription = this.props.navigation.addListener('willBlur', payload =>
+      this.backHandler.remove()
+    );
+  }
+  componentWillUnmount() {
+    this._didFocusSubscription && this._didFocusSubscription.remove();
+    this._willBlurSubscription && this._willBlurSubscription.remove();
   }
 
   async getEmployee(employeeId){
