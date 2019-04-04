@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, BackHandler} from 'react-native';
 import NumPad from './components/NumPad';
-import SoundHelper from './components/SoundHelper';
 import Camera from './components/Camera';
 import Commands from './components/Commands';
 import FooterMessage from './components/FooterMessage';
 import AppHeader from './components/AppHeader';
-import AjaxHelper from './components/AjaxHelper';
+import AjaxHelper from './helpers/AjaxHelper';
+import SoundHelper from './helpers/SoundHelper';
 
 type Props = {};
 export default class App extends Component<Props> {

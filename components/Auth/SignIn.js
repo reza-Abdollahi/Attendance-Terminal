@@ -10,8 +10,8 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity
 } from 'react-native';
-import SoundHelper from '../SoundHelper';
-import AjaxHelper from '../AjaxHelper';
+import SoundHelper from '../../helpers/SoundHelper';
+import AjaxHelper from '../../helpers/AjaxHelper';
 
 export default class SignIn extends React.Component {
   static navigationOptions = {

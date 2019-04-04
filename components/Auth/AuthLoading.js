@@ -6,7 +6,7 @@ import {
   StyleSheet,
   View
 } from 'react-native';
-import AjaxHelper from '../AjaxHelper';
+import AjaxHelper from '../../helpers/AjaxHelper';
 
 export default class AuthLoading extends React.Component {
   constructor(props) {
