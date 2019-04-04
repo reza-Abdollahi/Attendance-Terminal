@@ -7,9 +7,11 @@ import {
   StyleSheet,
   TextInput,
   AsyncStorage,
+  ActivityIndicator,
   KeyboardAvoidingView,
   TouchableOpacity
 } from 'react-native';
+import Loader from '../Loader';
 import SoundHelper from '../../helpers/SoundHelper';
 import AjaxHelper from '../../helpers/AjaxHelper';
 
@@ -20,7 +22,7 @@ export default class SignIn extends React.Component {
 
   constructor(props){
     super(props);
-    this.state = { username:'', password:'' };
+    this.state = { username:'', password:'', loading:false };
     this.passwordInput = React.createRef();
   }
 
@@ -54,14 +56,18 @@ export default class SignIn extends React.Component {
               onChangeText={value => this.setState({password: value.trim()})}
               placeholder="کلمه عبور"
               textContentType="password"
+              autoCapitalize="none"
               secureTextEntry={true}
               returnKeyType="done"
               ref={this.passwordInput}
               underlineColorAndroid='transparent' />
           </View>
-          <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={this.signInAsync}>
-            <Text style={styles.loginText}>ورود</Text>
+          <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={this.signInAsync} disabled={this.state.loading}>
+            {this.state.loading
+              ? <ActivityIndicator color="#fff"/>
+              : <Text style={styles.loginText}>ورود</Text>}
           </TouchableOpacity>
+          <Loader loading={this.state.loading} overlayOnly={true} />
         </KeyboardAvoidingView>
       </View>
     );
@@ -76,9 +82,12 @@ export default class SignIn extends React.Component {
       return;
     }
 
+    this.setState({loading: true})
     var userToken = await AjaxHelper.getLoginId(username, password);
     if (!userToken) {
-      Alert.alert('خطا','نام کاربری یا رمز عبور اشتباه است');
+      Alert.alert('خطا','نام کاربری یا رمز عبور اشتباه است',
+        [{text: 'OK', onPress: () => this.setState({loading: false})}]
+      );
       this.errorSound.play();
       return;
     }
