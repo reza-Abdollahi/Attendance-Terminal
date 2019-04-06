@@ -10,6 +10,8 @@ import {
 export default class SignOut extends React.Component {
   static navigationOptions = {
     title: 'خروج',
+    drawerLabel: "خروج",
+    drawerIcon: <Text>🚪</Text>
   };
 
   render() {

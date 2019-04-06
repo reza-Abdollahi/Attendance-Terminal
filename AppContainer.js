@@ -35,18 +35,21 @@ const AppDrawer = createDrawerNavigator(
       screen: AppStack,
       navigationOptions: {
         title: "ثبت حضور",
+        drawerIcon: <Text>🏠</Text>
       }
     },
-    SignOut: {
-      screen: SignOut,
-      navigationOptions: {
-        title: "خروج",
-      }
-    },
+    SignOut: SignOut,
   },
   {
     drawerPosition: 'right',
-    drawerBackgroundColor: 'lightgrey'
+    drawerBackgroundColor: 'lightgrey',
+    contentOptions: {
+      activeTintColor: '#666',
+      activeBackgroundColor: 'darkgrey',
+      itemStyle:{
+        flexDirection: 'row-reverse'
+      },
+    }
   }
 );
 const AuthStack = createStackNavigator(
