@@ -34,7 +34,8 @@ const styles = StyleSheet.create({
      marginLeft:10
    },
    title: {
-     lineHeight:24
+     lineHeight:24,
+     color:'#ccc',
    }
 });
 

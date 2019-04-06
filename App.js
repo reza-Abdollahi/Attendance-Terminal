@@ -168,14 +168,14 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'space-around',
 
-      backgroundColor: '#888',
+      backgroundColor: '#aaa',
     },
     appFooter: {
         justifyContent: 'flex-start',
         flexDirection: 'row-reverse',
         paddingTop: 5,
         paddingRight: 10,
-        backgroundColor: 'darkslategray',
+        backgroundColor: '#364653',
     },
     leftCol:{
       width:'60%',

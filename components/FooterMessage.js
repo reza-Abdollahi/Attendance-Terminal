@@ -25,7 +25,7 @@ export default class FooterMessage extends Component<Props> {
             <View style={styles.rtl}>
               <Text>
                 <Text style={styles.white}> 🤵 </Text>
-                <Text> کاربر محترم، </Text>
+                <Text style={{color:'#ccc'}}> کاربر محترم، </Text>
                 <Text style={[styles.bold, styles.white]}> {employeeName}</Text>
               </Text>
               { inTime

@@ -9,7 +9,7 @@ import SignOut from './components/Auth/SignOut';
 
 const defaultNavigationOptions = {
   headerStyle: {
-    backgroundColor: 'darkslategray',
+    backgroundColor: '#364653',
   },
   headerTintColor: '#fff',
   headerTitleStyle: {
