@@ -35,6 +35,7 @@ const AppDrawer = createDrawerNavigator(
       screen: AppStack,
       navigationOptions: {
         title: "ثبت حضور",
+        drawerLockMode: 'locked-closed',
         drawerIcon: <Text>🏠</Text>
       }
     },
