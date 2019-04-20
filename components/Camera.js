@@ -10,6 +10,7 @@ export default class Camera extends Component {
   }
 
   render() {
+    const { detectFaces } = this.props;
     return (
       <View style={styles.container}>
         <Text style={{ fontSize: 1 }}> &nbsp; </Text>
@@ -19,19 +20,39 @@ export default class Camera extends Component {
           }}
           style={styles.preview}
           type={RNCamera.Constants.Type.front}
-          flashMode={RNCamera.Constants.FlashMode.auto}
           captureAudio={false}
           permissionDialogTitle={'دسترسی به دوربین'}
           permissionDialogMessage={'لطفا دسترسی به دوربین را تایید کنید.'}
+          faceDetectionLandmarks={
+            RNCamera.Constants.FaceDetection.Landmarks
+              ? RNCamera.Constants.FaceDetection.Landmarks.none
+              : null
+          }
+          faceDetectionMode={
+            RNCamera.Constants.FaceDetection.Mode
+              ? RNCamera.Constants.FaceDetection.Mode.fast
+              : null
+          }
+          onFacesDetected={detectFaces ? this.facesDetected : null}
+          onFaceDetectionError={this.onFaceDetectionError}
         />
         <Text style={{ fontSize: 1 }}> &nbsp; </Text>
       </View>
     );
   }
 
+  facesDetected = ( faces ) => this.props.onFaceDetected(faces);
+  onFaceDetectionError = ( isOperational ) => console.warn(isOperational);
+
   async takePicture() {
     if (this.camera) {
-      const options = { quality: 0.5, base64: true };
+      const options = {
+        quality: 0.75,
+        width: 300,
+        base64: true,
+        doNotSave: true,
+        pauseAfterCapture: true,
+      };
       const data = await this.camera.takePictureAsync(options);
       // console.warn('takePicture ', data);
       return data.base64;

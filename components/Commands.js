@@ -9,8 +9,8 @@ export default class Commands extends Component<Props> {
         this.props.onClick(e);
     }
     isCommandEnabled(type){
-        const { currentEmployeeInfo, preventCommand } = this.props;
-        let isEnabled = currentEmployeeInfo && !preventCommand;
+        const { currentEmployeeInfo, preventCommand, detectFaces } = this.props;
+        let isEnabled = currentEmployeeInfo && !preventCommand && !detectFaces;
         if (type === "out")
           isEnabled = isEnabled && currentEmployeeInfo.lastInTime;
         return isEnabled;

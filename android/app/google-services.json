@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "552428210821",
+    "firebase_url": "https://attendance-terminal.firebaseio.com",
+    "project_id": "attendance-terminal",
+    "storage_bucket": "attendance-terminal.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:552428210821:android:00605d6599d274bb",
+        "android_client_info": {
+          "package_name": "com.attendanceterminal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAF61OcEJ3egLjoZSieUleaUfPkxFr7Exo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "552428210821-5trejtq2nhnhlf090a9jnput2dcdrcbp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
