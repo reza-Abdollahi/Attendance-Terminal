@@ -136,7 +136,7 @@ export default class App extends Component<Props> {
   }
 
   async onFaceDetected(faces) {
-    if (!faces || faces.length === 0 ||
+    if (!faces || faces.faces.length === 0 ||
         this.currentlyprocessingFaces ||
         !this.state.currentEmployeeInfo || this.takenPicture)
     { return; }

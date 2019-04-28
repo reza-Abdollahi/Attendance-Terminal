@@ -21,8 +21,12 @@ export default class Camera extends Component {
           style={styles.preview}
           type={RNCamera.Constants.Type.front}
           captureAudio={false}
-          permissionDialogTitle={'دسترسی به دوربین'}
-          permissionDialogMessage={'لطفا دسترسی به دوربین را تایید کنید.'}
+          androidCameraPermissionOptions={{
+            title: 'دسترسی به دوربین',
+            message: 'لطفا دسترسی به دوربین را تایید کنید.',
+            buttonPositive: 'Ok',
+            buttonNegative: 'Cancel',
+          }}
           faceDetectionLandmarks={
             RNCamera.Constants.FaceDetection.Landmarks
               ? RNCamera.Constants.FaceDetection.Landmarks.none

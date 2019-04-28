@@ -1,6 +1,6 @@
 import {Platform} from 'react-native';
 
 const settings = {
-  noFaceDetection: Platform.OS === 'ios',
+  noFaceDetection: false,
 }
 export default settings

@@ -10,7 +10,7 @@
     "axios": "^0.18.0",
     "react": "16.6.3",
     "react-native": "0.58.6",
-    "react-native-camera": "^1.13.1",
+    "react-native-camera": "^2.6.0",
     "react-native-gesture-handler": "^1.1.0",
     "react-native-sound": "^0.10.12",
     "react-navigation": "^3.4.1"
