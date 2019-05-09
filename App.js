@@ -33,7 +33,10 @@ export default class App extends Component<Props> {
       this.takenPicture = undefined;
 
       this._didFocusSubscription = props.navigation.addListener('didFocus', payload =>
-        this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => true)
+        this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+          this.props.navigation.closeDrawer();
+          return true;
+        })
       );
   }
 
