@@ -35,40 +35,42 @@ export default class SignIn extends React.Component {
     return (
       <View style={styles.container}>
         <Image style={styles.backgroundImage} resizeMode="cover" source={require('../../resources/login-bg.jpg')} />
-        <KeyboardAvoidingView behavior="padding" style={styles.form}>
-          <View style={styles.logo} >
-            <Image source={require('../../resources/sepanta-logo.png')} />
-            <Text style={styles.headerText}>سامانه حضور و غیاب پرسنلی سپنتا</Text>
-          </View>
-          <View style={styles.inputContainer}>
-            <TextInput style={styles.inputs}
-              onChangeText={value => this.setState({username: value.trim()})}
-              placeholder="نام کاربری"
-              textContentType="username"
-              autoCapitalize="none"
-              onSubmitEditing={() => this.passwordInput.current.focus()}
-              autoCorrect={false}
-              returnKeyType="next"
-              underlineColorAndroid='transparent' />
-          </View>
-          <View style={styles.inputContainer}>
-            <TextInput style={styles.inputs}
-              onChangeText={value => this.setState({password: value.trim()})}
-              placeholder="کلمه عبور"
-              textContentType="password"
-              autoCapitalize="none"
-              secureTextEntry={true}
+        <View style={styles.form}>
+          <KeyboardAvoidingView behavior="padding" >
+            <View style={styles.logo} >
+              <Image source={require('../../resources/sepanta-logo.png')} />
+              <Text style={styles.headerText}>سامانه حضور و غیاب پرسنلی سپنتا</Text>
+            </View>
+            <View style={styles.inputContainer}>
+              <TextInput style={styles.inputs}
+                onChangeText={value => this.setState({username: value.trim()})}
+                placeholder="نام کاربری"
+                textContentType="username"
+                autoCapitalize="none"
+                onSubmitEditing={() => this.passwordInput.current.focus()}
+                autoCorrect={false}
+                returnKeyType="next"
+                underlineColorAndroid='transparent' />
+            </View>
+            <View style={styles.inputContainer}>
+              <TextInput style={styles.inputs}
+                onChangeText={value => this.setState({password: value.trim()})}
+                placeholder="کلمه عبور"
+                textContentType="password"
+                autoCapitalize="none"
+                secureTextEntry={true}
               returnKeyType="done"
-              ref={this.passwordInput}
-              underlineColorAndroid='transparent' />
-          </View>
-          <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={this.signInAsync} disabled={this.state.loading}>
-            {this.state.loading
-              ? <ActivityIndicator color="#fff"/>
-              : <Text style={styles.loginText}>ورود</Text>}
-          </TouchableOpacity>
-          <Loader loading={this.state.loading} overlayOnly={true} />
-        </KeyboardAvoidingView>
+                ref={this.passwordInput}
+                underlineColorAndroid='transparent' />
+            </View>
+            <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={this.signInAsync} disabled={this.state.loading}>
+              {this.state.loading
+                ? <ActivityIndicator color="#fff"/>
+                : <Text style={styles.loginText}>ورود</Text>}
+            </TouchableOpacity>
+            <Loader loading={this.state.loading} overlayOnly={true} />
+          </KeyboardAvoidingView>
+        </View>
       </View>
     );
   }
