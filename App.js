@@ -12,7 +12,7 @@ import Settings from './config/Settings';
 type Props = {};
 export default class App extends Component<Props> {
   static navigationOptions = {
-      headerTitle: <AppHeader />,
+      header: null,
   };
 
   constructor(props) {
@@ -29,6 +29,7 @@ export default class App extends Component<Props> {
       this.onEmployeeIdChanged = this.onEmployeeIdChanged.bind(this);
       this.onFaceDetected = this.onFaceDetected.bind(this);
       this.registerCommand = this.registerCommand.bind(this);
+      this.onConnectivityChanged = this.onConnectivityChanged.bind(this);
       this.camera = React.createRef();
       this.takenPicture = undefined;
 
@@ -150,13 +151,18 @@ export default class App extends Component<Props> {
     this.currentlyprocessingFaces = undefined;
   }
 
+  onConnectivityChanged(isConnected) {
+    this.setState({isConnected});
+  }
+
   render() {
-    const { message, employeeId, currentEmployeeInfo } = this.state;
+    const { message, employeeId, currentEmployeeInfo, isConnected } = this.state;
     const faceDetectionEnabled = !Settings.noFaceDetection;
     const shouldDetectFaces = faceDetectionEnabled && !this.takenPicture;
 
     return (
         <View style={styles.mainContainer}>
+            <AppHeader onConnectivityChanged={this.onConnectivityChanged}/>
             <View style={styles.appMain}>
               <View style={styles.appMainCenter}>
                 <View style={styles.rightCol}>
@@ -169,7 +175,7 @@ export default class App extends Component<Props> {
               </View>
             </View>
             <View style={styles.appFooter}>
-              <FooterMessage message={message} employeeInfo={currentEmployeeInfo}/>
+              <FooterMessage message={message} employeeInfo={currentEmployeeInfo} isConnected={isConnected}/>
             </View>
         </View>
     );

@@ -10,14 +10,21 @@ export default class FooterMessage extends Component<Props> {
         const currentEmployeeInfo = this.props.employeeInfo;
         const employeeName = currentEmployeeInfo ? currentEmployeeInfo.fullName : "";
         const inTime = currentEmployeeInfo ? currentEmployeeInfo.lastInTime : "";
+        let notificationText = text;
 
         let icon;
-        if (type === "success") {
-            icon = <Text style={styles.green}>✔</Text>
-        } else if (type === "error") {
-            icon = <Text style={styles.red}>❗</Text>
-        } else {
-            icon = <Text>⌘</Text>
+        if (!this.props.isConnected) {
+          icon = <Text style={styles.red}>❗</Text>
+          notificationText = 'ارتباط شبکه برقرار نیست'
+        }
+        else {
+          if (type === "success") {
+              icon = <Text style={styles.green}>✔</Text>
+          } else if (type === "error") {
+              icon = <Text style={styles.red}>❗</Text>
+          } else {
+              icon = <Text>⌘</Text>
+          }
         }
 
         return (
@@ -38,7 +45,7 @@ export default class FooterMessage extends Component<Props> {
             </View>
             <View style={styles.rtl}>
               <Text style={styles.icon}>{icon}</Text>
-              <Text style={[styles.iconText, styles.orange]}>  {text}</Text>
+              <Text style={[styles.iconText, styles.orange]}>  {notificationText}</Text>
             </View>
           </View>
         );

@@ -14,6 +14,7 @@ import {
 import Loader from '../Loader';
 import SoundHelper from '../../helpers/SoundHelper';
 import AjaxHelper from '../../helpers/AjaxHelper';
+import ConnectionStatus from '../ConnectionStatus';
 
 export default class SignIn extends React.Component {
   static navigationOptions = {
@@ -30,6 +31,10 @@ export default class SignIn extends React.Component {
     SoundHelper.initiate();
     this.errorSound =  SoundHelper.getSoundObject({path:require('../../resources/Beep-Error.wav')});
   }
+
+  onConnectivityChanged = isConnected => {
+    this.isConnected = isConnected;
+  };
 
   render() {
     return (
@@ -69,16 +74,20 @@ export default class SignIn extends React.Component {
                 : <Text style={styles.loginText}>ورود</Text>}
             </TouchableOpacity>
             <Loader loading={this.state.loading} overlayOnly={true} />
+            <ConnectionStatus isHidden={true} onConnectivityChanged={this.onConnectivityChanged} />
           </KeyboardAvoidingView>
         </View>
       </View>
     );
   }
 
-  // test credentials = 'Tablet.Test.Attendance', 'Test@321'
   signInAsync = async () => {
     let username = encodeURIComponent(this.state.username),
         password = encodeURIComponent(this.state.password);
+    if (!this.isConnected) {
+      Alert.alert('خطا', 'ارتباط شبکه برقرار نیست');
+      return;
+    }
     if (!username || !password) {
       Alert.alert('خطا','لطفا نام کاربری و رمز عبور را وارد نمایید');
       return;
